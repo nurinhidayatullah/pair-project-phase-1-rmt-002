@@ -15,7 +15,8 @@ module.exports = {
     */
 
     let data = [{
-      username: 'leonardo dicaprio',
+      name: 'leonardo dicaprio',
+      username: 'leonard',
       password: '123456',
       type: 'customer',
       status: false,
@@ -23,6 +24,7 @@ module.exports = {
       updatedAt: new Date()
     }, 
     {
+      name: 'hotelier',
       username: 'hotelier',
       password: '123456',
       type: 'hotel',

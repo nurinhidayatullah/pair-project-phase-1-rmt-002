@@ -1,10 +1,16 @@
-const { Booking, Hotel, User } = require('./models/index.js')
+const { Booking, Hotel, User, i } = require('../models')
+const convert = require('../helper/convertToMoney')
 
 class Controller {
     static home (req, res) {
-        Hotel.findAll()
-            .then((data) => {
-                res.render('home', { data })
+        Hotel.findAll({
+            include: {model: i }
+        })
+            .then((datas) => {
+                for(let data of datas) {
+                    data.price = convert(data.price)
+                }
+                res.render('home', {datas})
             })
             .catch((err) => {
                 console.log(err)
@@ -79,3 +85,5 @@ class Controller {
             })
     }
 }
+
+module.exports = Controller

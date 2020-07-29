@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <%- include('partials/bootstrap') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container media-body shadow p-3 mb-5 bg-white rounded mt-5 w-25">
+        <form action="/register" method="POST">
+                <label for="validationServer01">Full Name</label>
+                <input type="text" class="form-control" id="validationServer01"><br>
+                <!-- <div class="valid-feedback">
+                  Looks good!
+                </div> -->
+                <label for="validationServer02">Username</label>
+                <input type="text" class="form-control" id="validationServer02"><br>
+                <!-- <div class="valid-feedback">
+                  Looks good!
+                </div> -->
+                <label for="validationServer03">Password</label>
+                <input type="text" class="form-control" id="validationServer03"><br>
+                <!-- <div class="invalid-feedback">
+                  Looks good!
+                </div> -->
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">As Customer</button>
+                <button class="btn btn-primary" type="submit">As Hotel's Admin</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
