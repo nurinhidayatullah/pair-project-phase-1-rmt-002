@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <%- include('partials/bootstrap') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container" style="width: 60%; margin-top: 10px;">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Filter By
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Low Price</a>
+                      <a class="dropdown-item" href="#">High Price</a>
+                    </div>
+                </div>
+            </li>
+          </ul>
+          <% for(let data of datas) { %> 
+            <div class="shadow p-3 mb-5 bg-white rounded mt-3">
+                <div class="media">
+                    <img src="<%=data.i.source%>" class="mr-3" alt="<%=data.name%>.jpeg" style="width: 140px; height: 140px;">
+                    <div class="media-body">
+                      <h3 class="mt-0 text-center"><%=data.name + ' Hotel'%></h3>
+                      <img src="https://img.icons8.com/ios/50/000000/bed.png" style="width: 20px; height: 20px; margin-left: 20px; position: fixed;">
+                      <p class="mt-0 ml-5">Rooms Available: <%=data.roomsavailable%></p>
+                      <img src="https://img.icons8.com/wired/64/000000/price-tag-euro.png" style="width: 20px; height: 20px; margin-left: 20px; position: fixed;">
+                      <p class="mt-0 ml-5">Price: <%=data.price%> /Nigth</p>
+                      <div style="text-align: right;">
+                        <a class="btn btn-primary" href="/hotels/booking" role="button">Book Now</a>
+                      </div>
+                    </div>
+                </div>
+            </div><br>
+          <% } %>
+    </div>
+</body>
+<footer>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+</footer>
+</html>
