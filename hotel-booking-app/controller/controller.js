@@ -1,11 +1,12 @@
 const { Booking, Hotel, User, i } = require('../models')
 const convert = require('../helper/convertToMoney')
+const QRCode = require('qrcode');
 
 class Controller {
     static home (req, res) {
         Hotel.findAll({
             include: {model: i }
-        })
+            })
             .then((datas) => {
                 for(let data of datas) {
                     data.price = convert(data.price)
@@ -84,6 +85,16 @@ class Controller {
                 console.log(err)
             })
     }
+
+    static displayQR (req, res) {
+        QRCode.toDataURL('/success', function (err, url) {
+            res.render('qr', {qr: url});
+        })
+    }
+
+    static displayConfirmation (req, res) {
+        res.render('success')
+    }
 }
 
-module.exports = Controller
+module.exports = {Controller}

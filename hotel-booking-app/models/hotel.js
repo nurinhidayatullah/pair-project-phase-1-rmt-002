@@ -15,10 +15,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Hotel.init({
-    name: DataTypes.STRING,
-    location: DataTypes.STRING,
-    roomsavailable: DataTypes.INTEGER,
-    price: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    location: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    roomsavailable: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true
+      }
+    },
   }, {
     sequelize,
     modelName: 'Hotel',

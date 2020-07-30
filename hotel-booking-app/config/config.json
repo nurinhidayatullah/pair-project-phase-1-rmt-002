@@ -4,7 +4,7 @@
     "password": "postgres",
     "database": "hotel-movie-app",
     "host": "localhost",
-    "port": 5432,
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "port": 5433
   }
 }
