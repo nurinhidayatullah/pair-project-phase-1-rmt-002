@@ -137,13 +137,12 @@ class Controller {
     static myPage (req, res) {
         let id = req.params.id
         id = Number(id)
-        let isCustomer;
+        let isCustomer = true;
         User.findByPk(id, {
             include: {model: Hotel}
         })
             .then(data => {
-                console.log(data)
-                if(user.type === 'customer'){
+                if(data.type === 'customer'){
                     isCustomer = true
                 } else {
                     isCustomer = false
@@ -158,7 +157,7 @@ class Controller {
     static booking(req, res) {
         let id = req.params.id
         let { checkin, checkout, HotelId } = req.body
-        let obj = {UserId: id, HotelId: Number(HotelId), checkin_date: checkin, checkout_date: checkout}
+        let obj = {UserId: Number(id), HotelId: Number(HotelId), checkin_date: checkin, checkout_date: checkout}
         Booking.create(obj)
             .then(data => {
                 res.redirect(`/myPage/${id}`)
