@@ -1,5 +1,4 @@
 const express = require('express')
-const { Router } = require('express')
 const route = express.Router()
 const Controller = require('../controller/controller.js').Controller
 
@@ -9,6 +8,7 @@ route.post('/', Controller.login)
 route.post('/logout/:id', Controller.logout)
 route.get('/myPage/:id', Controller.myPage)
 route.get('/:id/addHotel', Controller.addHotelForm)
+route.post('/booking/:id', Controller.booking)
 route.get('/qr', Controller.displayQR)
 route.get('/success', Controller.displayConfirmation)
 

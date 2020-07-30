@@ -1,14 +1,13 @@
 const { Booking, Hotel, User, i } = require('../models')
 const convert = require('../helper/convertToMoney')
 const QRCode = require('qrcode');
-const user = require('../models/user');
-const hotel = require('../models/hotel');
+
 
 class Controller {
     static home (req, res) {
         let { id } = req.query
         Hotel.findAll({
-            include: {model: i }
+            include: {model: i}
             })
             .then((datas) => {
                 for(let data of datas) {
@@ -26,7 +25,7 @@ class Controller {
     }
 
     static addUserForm (req, res) {
-        res.render('addUserForm')
+        res.render('addUserForm', {id: null})
     }
 
     static addUser (req, res) {
@@ -143,6 +142,7 @@ class Controller {
             include: {model: Hotel}
         })
             .then(data => {
+                console.log(data)
                 if(user.type === 'customer'){
                     isCustomer = true
                 } else {
@@ -151,8 +151,22 @@ class Controller {
                 res.render('my-page', {data, isCustomer})                 
             })
             .catch(err => {
-                res.send('Harap Login Dahulu')
+                res.send(err)
             }) 
+    }
+
+    static booking(req, res) {
+        let id = req.params.id
+        let { checkin, checkout, HotelId } = req.body
+        let obj = {UserId: id, HotelId: Number(HotelId), checkin_date: checkin, checkout_date: checkout}
+        Booking.create(obj)
+            .then(data => {
+                res.redirect(`/myPage/${id}`)
+            })
+            .catch(err => {
+                console.log(err)
+                res.send(err)
+            })
     }
 }
 

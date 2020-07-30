@@ -17,6 +17,7 @@ module.exports = {
         location: 'Jakarta',
         roomsavailable: 30,
         price: 1000000,
+        IId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }]

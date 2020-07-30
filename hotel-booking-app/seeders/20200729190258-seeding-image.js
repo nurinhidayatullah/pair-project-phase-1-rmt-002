@@ -14,7 +14,6 @@ module.exports = {
     return queryInterface.bulkInsert('is', [
       {
         source: 'mariot.jpeg',
-        HotelId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }
