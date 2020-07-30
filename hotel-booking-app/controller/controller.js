@@ -5,8 +5,9 @@ class Controller {
     static home (req, res) {
         Hotel.findAll({
             include: {model: i }
-        })
+            })
             .then((datas) => {
+                // console.log(data)
                 for(let data of datas) {
                     data.price = convert(data.price)
                 }
@@ -86,4 +87,4 @@ class Controller {
     }
 }
 
-module.exports = Controller
+module.exports = {Controller}
