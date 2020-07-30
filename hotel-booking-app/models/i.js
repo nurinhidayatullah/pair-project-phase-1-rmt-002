@@ -11,18 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      i.belongsTo(models.Hotel, {foreignKey: 'HotelId'})
+      i.belongsTo(models.Hotel, {foreignKey: 'IId'})
     }
   };
   i.init({
     source: {
       type: DataTypes.STRING,
-      validate: {
-        notEmpty: true
-      }
-    },
-    HotelId: {
-      type: DataTypes.INTEGER,
       validate: {
         notEmpty: true
       }

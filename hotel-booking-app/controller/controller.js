@@ -1,9 +1,12 @@
 const { Booking, Hotel, User, i } = require('../models')
 const convert = require('../helper/convertToMoney')
 const QRCode = require('qrcode');
+const user = require('../models/user');
+const hotel = require('../models/hotel');
 
 class Controller {
     static home (req, res) {
+        let { id } = req.query
         Hotel.findAll({
             include: {model: i }
             })
@@ -11,7 +14,11 @@ class Controller {
                 for(let data of datas) {
                     data.price = convert(data.price)
                 }
-                res.render('home', {datas})
+                if(id) {
+                    res.render('home', {datas, id})
+                } else {
+                    res.render('home', {datas, id: null})
+                }
             })
             .catch((err) => {
                 console.log(err)
@@ -35,7 +42,8 @@ class Controller {
     }
 
     static addHotelForm (req, res) {
-        res.render('addHotelForm')
+        let id = req.params.id
+        res.render('addHotelForm', {id: Number(id)})
     }
 
     static addHotel (req, res) {
@@ -94,6 +102,57 @@ class Controller {
 
     static displayConfirmation (req, res) {
         res.render('success')
+    }
+
+    static login(req, res) {
+        let {username, password} = req.body
+        let login;
+        User.findOne({where: {username, password}})
+            .then(data => {
+                let { status } = data
+                let obj = {status: true}
+                login = data
+                return User.update(obj,{where: {id: data.id}, field: {status}})
+            })
+            .then(data => {
+                res.redirect(`/?id=${login.id}`)
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
+
+    static logout(req, res) {
+        let id  = req.params.id
+        id = Number(id)
+        let obj = {status: false}
+        User.update(obj, {where: {id}, field: {status: false}})
+            .then(data => {
+                res.redirect('/')
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
+
+    static myPage (req, res) {
+        let id = req.params.id
+        id = Number(id)
+        let isCustomer;
+        User.findByPk(id, {
+            include: {model: Hotel}
+        })
+            .then(data => {
+                if(user.type === 'customer'){
+                    isCustomer = true
+                } else {
+                    isCustomer = false
+                }
+                res.render('my-page', {data, isCustomer})                 
+            })
+            .catch(err => {
+                res.send('Harap Login Dahulu')
+            }) 
     }
 }
 

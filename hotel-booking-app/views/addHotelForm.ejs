@@ -5,9 +5,8 @@
     <%- include('partials/bootstrap') %>
 </head>
 <body>
-    <%- include('partials/navbar') %>
     <div class="container media-body shadow p-3 mb-5 bg-white rounded mt-5 w-25">
-        <form action="/register" method="POST">
+        <form action="/<%=id%>/addHotel" method="POST">
                 <label for="validationServer01">Hotel's Name</label>
                 <input type="text" name="name" class="form-control" id="validationServer01"><br>
                 <!-- <div class="valid-feedback">
@@ -28,13 +27,11 @@
                 <form action="" method="POST">
                     <div class="form-group">
                       <label for="exampleFormControlFile1">Hotel's Image</label>
-                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                      <input type="file" name="IId" value='id' class="form-control-file" id="exampleFormControlFile1">
                     </div>
                 </form>
-            <div class="text-center">
-                <button class="btn btn-primary" type="submit">As Customer</button>
-                <button class="btn btn-primary" type="submit">As Hotel's Admin</button>
-            </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-primary" href="/myPage/<%=id%>" type="button">Cancel</a>
         </form>
     </div>
 </body>

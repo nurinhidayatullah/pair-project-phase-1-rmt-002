@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Hotel.hasOne(models.i, {foreignKey: 'HotelId'})
+      Hotel.hasOne(models.i, {foreignKey: 'IId'})
+      Hotel.belongsToMany(models.User, {through: 'Booking', foreignKey: 'HotelId'})
     }
   };
   Hotel.init({
@@ -39,6 +40,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
+    IId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Hotel',

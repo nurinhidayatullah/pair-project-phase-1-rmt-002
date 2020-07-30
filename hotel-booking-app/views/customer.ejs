@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <%- include('partials/bootstrap') %>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container" style="width: 60%; margin-top: 10px;">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Filter By
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Low Price</a>
+                      <a class="dropdown-item" href="#">High Price</a>
+                    </div>
+                </div>
+            </li>
+          </ul>
+          <%- include('./partials/hotels-data') %>
+    </div>
+</body>
+<footer>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+</footer>
+</html>

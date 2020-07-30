@@ -5,36 +5,37 @@
     <%- include('partials/bootstrap') %>    
 </head>
 <body>
-    <%- include('partials/navbar') %>
     <div class="container w-100">
+      <% if(isCustomer) { %> 
         <h3>Welcome <%=data.name%></h3>
-        <% if(type === 'user') { %> 
             <table class="table">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Hotel Name</th>
                     <th scope="col">Check in Date</th>
-                    <th scope="col">Check Out Date/th>
+                    <th scope="col">Check Out Date</th>
                     <th scope="col">Total Price</th>
+                    <th scope="col">Duration</th>
                     <th scope="col">Payment Status</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                    <% for(let data of datas) { %> 
+                    <% for(let hotel of data.Hotels) { %> 
                         <tr>
-                          <td><%=data.Hotels.name%></td>
-                          <td><%=data.Hotels.Booking.checkin_date%></td>
-                          <td><%=data.Hotels.Booking.checkout_date%></td>
-                          <td><%=data.Hotels.price * data.Hotels.Booking.duration%></td>
-                          <td><%=data.Hotels.Booking.duration%> Day/s</td>
-                          <td><button type="button" disabled><%=data.Hotels.Booking.status%></button></td>
+                          <td><%=hotel.name%></td>
+                          <td><%=hotel.Booking.checkin_date.toJSON().slice(0,10)%></td>
+                          <td><%=hotel.Booking.checkout_date.toJSON().slice(0,10)%></td>
+                          <td><%=hotel.price * hotel.Booking.duration%></td>
+                          <td><%=hotel.Booking.duration%> Day/s</td>
+                          <td><button type="button" disabled>Belum Bayar</button></td>
                           <td><a type="button" class="btn btn-primary" href="/user/<%=data.id%>/payment">Make Payment</a></td>
                         </tr>
                     <% } %>
                 </tbody>
         <% } else { %>
-            <a type="button" class="btn btn-primary" href="/user/addHotels/<%=data.id%>?type">Add Hotels</a>
+          <h3>Welcome <%=data.name%></h3>
+            <a type="button" class="btn btn-primary" href="/<%=data.id%>/addHotel">Add Hotels</a>
             <table class="table">
                 <thead class="thead-light">
                   <tr>
@@ -47,15 +48,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <% for(let data of datas) { %> 
+                    <% for(let user of data.Hotels) { %> 
                         <tr>
-                          <td><%=data.Users.name%></td>
-                          <td><%=data.Users.Booking.checkin_date%></td>
-                          <td><%=data.Users.Booking.checkout_date%></td>
-                          <td><%=data.price * data.Users.Booking.duration%></td>
-                          <td><%=data.Users.Booking.duration%> Day/s</td>
-                          <td><button type="button" disabled><%=data.Users.Booking.status%></button></td>
-                          <td><a type="button" class="btn btn-primary" href="/booking/validate/<%=data.Users.Booking.id%>">Validate Payment</a></td>
+                          <td><%=user.name%></td>
+                          <td><%=user.Booking.checkin_date%></td>
+                          <td><%=user.Booking.checkout_date%></td>
+                          <td><%=hotel.price * user.Booking.duration%></td>
+                          <td><%=user.Booking.duration%> Day/s</td>
+                          <td><button type="button" disabled><%=user.Booking.status%></button></td>
+                          <td><a type="button" class="btn btn-primary" href="/booking/validate/<%=user.Booking.id%>">Validate Payment</a></td>
                         </tr>
                     <% } %>
                 </tbody>
