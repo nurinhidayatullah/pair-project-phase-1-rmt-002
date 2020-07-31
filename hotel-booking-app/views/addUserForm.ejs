@@ -7,6 +7,9 @@
 <body>
     <%- include('partials/navbar') %>
     <div class="container media-body shadow p-3 mb-5 bg-white rounded mt-5 w-25">
+      <% if(error) { %>
+        <p><%= error %></p>
+      <% } %>
         <form action="/register" method="POST">
                 <label for="validationServer01">Full Name</label>
                 <input type="text" name="name" class="form-control" id="validationServer01"><br>

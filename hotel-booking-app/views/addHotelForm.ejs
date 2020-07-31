@@ -6,26 +6,31 @@
 </head>
 <body>
     <div class="container media-body shadow p-3 mb-5 bg-white rounded mt-5 w-25">
+      <% if(error) { %>
+        <p><%= error %> </p>
+      <% } %>
         <form action="/hotels/add" method="POST">
                 <label for="validationServer01">Hotel's Name</label>
                 <input type="text" name="name" class="form-control" id="validationServer01"><br>
-                <!-- <div class="valid-feedback">
-                  Looks good!
-                </div> -->
                 <label for="validationServer02">Address</label>
                 <input type="text" name="location" class="form-control" id="validationServer02"><br>
-                <!-- <div class="valid-feedback">
-                  Looks good!
-                </div> -->
                 <label for="validationServer03">Available Room</label>
                 <input type="text" name="roomsavailable" class="form-control" id="validationServer03"><br>
-                <!-- <div class="invalid-feedback">
-                  Looks good!
-                </div> -->
                 <label for="validationServer03">Price (/Nigth)</label>
                 <input type="text" name="price" class="form-control" id="validationServer03"><br>
-                <label for="validationServer03">Image Id</label>
-                <input type="text" name="ImageId" class="form-control" id="validationServer03"><br>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button">Image Id</button>
+                  </div>
+                  <select class="custom-select" name="ImageId" id="inputGroupSelect03" aria-label="Example select with button addon">
+                    <option selected>--Select Image--</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                    <option value="3">5</option>
+                  </select>
+                </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
                 <a class="btn btn-primary" href="/" type="button">Cancel</a>
         </form>

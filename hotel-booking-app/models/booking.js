@@ -57,6 +57,15 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   }, {
+    hooks: {
+      beforeCreate: (instance, options) => {
+        instance.duration = `${(instance.checkout_date - instance.checkin_date)/3600/1000/24}`;
+        return sequelize.models.Hotel.findByPk(instance.HotelId)
+        .then(hotel => {
+          instance.total_price = `${instance.duration * hotel.price}`
+        })
+      }
+    },
     sequelize,
     modelName: 'Booking',
   });

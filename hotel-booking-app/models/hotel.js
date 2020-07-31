@@ -14,36 +14,65 @@ module.exports = (sequelize, DataTypes) => {
       Hotel.belongsTo(models.i, {foreignKey: 'IId'})
       Hotel.belongsToMany(models.User, {through: 'Booking', foreignKey: 'HotelId'})
     }
+
+    plusHotel(name) {
+      return `${name} Hotel`
+    }
   };
   Hotel.init({
     name: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: false,
+          msg: 'Nama hotel tidak boleh kosong'
+        }
       }
     },
     location: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: false,
+          msg: 'Lokasi tidak boleh kosong'
+        }
       }
     },
     roomsavailable: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: false,
+          msg: 'Ruangan tidak boleh kosong'
+        },
+        isMin: (value) => {
+          if(value < 1) {
+            throw new Error('Ruangan minimal 1')
+          }
+        }
       }
     },
     price: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: false,
+          msg: 'Price tidak boleh kosong'
+        },
+        isMin: (value) => {
+          if(value < 1) {
+            throw new Error('Harga minimal 1')
+          }
+        }
       }
     },
     IId: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          args: false,
+          msg: 'Harap pilih id gambar yang tersedia'
+        }
       }
     }
   }, {

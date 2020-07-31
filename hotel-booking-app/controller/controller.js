@@ -4,10 +4,12 @@ const convert = require('../helper/convertToMoney')
 const QRCode = require('qrcode');
 
 
+
 class Controller {
     static home (req, res) {
         let { id } = req.query
         let datas;
+        let { error } = req.query
         Hotel.findAll({
             include: {model: i}
             })
@@ -22,16 +24,25 @@ class Controller {
                 if(id) {
                     res.render('home', {datas, id, user})
                 } else {
-                    res.render('home', {datas, id: null, user: {type: null}})
+                    if(error) {
+                        res.render('home', {datas, id: null, user: {type: null}, error})
+                    } else {
+                        res.render('home', {datas, id: null, user: {type: null}, error: null})
+                    }
                 }
             })
             .catch((err) => {
-                console.log(err)
+                res.send(err)
             })
     }
 
     static addUserForm (req, res) {
-        res.render('addUserForm', {id: null, user: {type: null}})
+        let { error } = req.query
+        if(error) {
+            res.render('addUserForm', {id: null, user: {type: null}, error})
+        } else {
+            res.render('addUserForm', {id: null, user: {type: null}, error: null})
+        }
     }
 
     static addUser (req, res) {
@@ -42,13 +53,22 @@ class Controller {
                 res.redirect('/')
             })
             .catch((err) => {
-                console.log(err)
+                let arr = []
+                for(let error of err.errors) {
+                    arr.push(error.message)
+                }
+                res.redirect(`/register/?error=${arr.join(', ')}`)
             })
     }
 
     static addHotelForm (req, res) {
         let id = req.params.id
-        res.render('addHotelForm', {id: Number(id)})
+        let { error } = req.query
+        if(error) {
+            res.render('addHotelForm', {id: Number(id), error})
+        } else {
+            res.render('addHotelForm', {id: Number(id), error: null})
+        }
     }
 
     static addHotel (req, res) {
@@ -57,17 +77,22 @@ class Controller {
 
         Hotel.create(obj)
             .then((data) => {
-                res.redirect('/')
+                res.redirect('/?id=2')
             })
             .catch((err) => {
-                console.log(err)
+                let arr = []
+                for(let error of err.errors) {
+                    arr.push(error.message)
+                }
+                res.redirect(`/hotels/add/?error=${arr.join(', ')}`)
             })
     }
 
     static deleteHotel (req, res) {
-        Hotel.destroy()
+        let id = req.params.id
+        Hotel.destroy({where:{id}})
             .then((data => {
-                res.redirect('home')
+                res.redirect('/?id=2')
             }))
             .catch((err) => {
                 console.log(err)
@@ -75,12 +100,17 @@ class Controller {
     }
 
     static editHotelForm (req, res) {
+        let {error} = req.query
         Hotel.findByPk(req.params.id)
             .then((data) => {
-                res.render('editHotelForm', { data })
+                if(error) {
+                    res.render('editHotelForm', { data, error })
+                } else {
+                    res.render('editHotelForm', { data, error: null })
+                }
             })
             .catch((err) => {
-                console.log9err
+                res.send(err)
             })
     }
 
@@ -93,19 +123,31 @@ class Controller {
                 res.redirect('/?id=2')
             })
             .catch((err) => {
-                console.log(err)
+                let arr = []
+                for(let error of err.errors) {
+                    arr.push(error.message)
+                }
+                res.redirect(`hotels/edit/${id}/?error=${arr.join(', ')}`)
             })
     }
 
     static displayQR (req, res) {
         let id = req.params.id
-        QRCode.toDataURL('/success', function (err, url) {
+        QRCode.toDataURL(`/success/${id}`, function (err, url) {
             res.render(`qr`, {qr: url, id});
         })
     }
 
     static displayConfirmation (req, res) {
         res.render('success')
+    }
+
+    static displayConfirmationPost (req, res) {
+        let id = req.params.id
+        let { DP_status } = req.body
+        let obj = { DP_status }
+        Booking.update(obj, {where: {id}, field: {DP_status}})
+        res.redirect(`/?id=${id}`)
     }
 
     static login(req, res) {
@@ -122,7 +164,7 @@ class Controller {
                 res.redirect(`/?id=${login.id}`)
             })
             .catch(err => {
-                res.send(err)
+                res.redirect(`/?error=Invalid Username Or Password`)
             })
     }
 

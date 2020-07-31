@@ -3,9 +3,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Successful Booking</title>
+    <%- include('partials/bootstrap') %>
 </head>
 <body>
-    <h1>Selamat booking-an Anda sudah berhasil</h1>
-    <a href="/">Back To Home</a>
+    <div class="container" style="text-align: center;">
+        <h1>Selamat booking-an Anda sudah berhasil</h1>
+        <form action="/" method="POST">
+            <button class="btn btn-primary" name="DP_status" value="true">Back To Home</button>
+        </form>
+    </div>
 </body>
 </html>
