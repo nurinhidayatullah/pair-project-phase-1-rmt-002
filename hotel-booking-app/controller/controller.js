@@ -1,4 +1,5 @@
 const { Booking, Hotel, User, i } = require('../models')
+const {Op, where} = require('sequelize')
 const convert = require('../helper/convertToMoney')
 const QRCode = require('qrcode');
 
@@ -6,17 +7,22 @@ const QRCode = require('qrcode');
 class Controller {
     static home (req, res) {
         let { id } = req.query
+        let datas;
         Hotel.findAll({
             include: {model: i}
             })
-            .then((datas) => {
+            .then((hotel) => {
+                datas = hotel
+                return User.findByPk(id)
+            })
+            .then(user => {
                 for(let data of datas) {
                     data.price = convert(data.price)
                 }
                 if(id) {
-                    res.render('home', {datas, id})
+                    res.render('home', {datas, id, user})
                 } else {
-                    res.render('home', {datas, id: null})
+                    res.render('home', {datas, id: null, user: {type: null}})
                 }
             })
             .catch((err) => {
@@ -25,15 +31,15 @@ class Controller {
     }
 
     static addUserForm (req, res) {
-        res.render('addUserForm', {id: null})
+        res.render('addUserForm', {id: null, user: {type: null}})
     }
 
     static addUser (req, res) {
-        let { username, password, type, status } = req.body
-        let obj = { username, password, type, status }
+        let { name, username, password, type } = req.body
+        let obj = { name, username, password, type, status: false}
         User.create(obj)
             .then((data) => {
-                res.redirect('home')
+                res.redirect('/')
             })
             .catch((err) => {
                 console.log(err)
@@ -46,11 +52,12 @@ class Controller {
     }
 
     static addHotel (req, res) {
-        let { name, location, roomsavailable, price } = req.body
-        let obj = { name, location, roomsavailable, price }
-        Hotel.create()
+        let { name, location, roomsavailable, price, ImageId } = req.body
+        let obj = { name, location, roomsavailable: Number(roomsavailable), price: Number(price), IId: Number(ImageId) }
+
+        Hotel.create(obj)
             .then((data) => {
-                res.redirect('home')
+                res.redirect('/')
             })
             .catch((err) => {
                 console.log(err)
@@ -78,15 +85,12 @@ class Controller {
     }
 
     static editHotel (req, res) {
-        let { name, location, price } = req.body
-        let obj = { name, location, price }
-        Hotel.update({
-                name: obj.name,
-                location: obj.location,
-                price: obj.price
-            })
+        let id = req.params.id
+        let { name, location, roomsavailable, price, IId } = req.body
+        let obj = { name, location, roomsavailable: Number(roomsavailable), price: Number(price), IId: Number(IId) }
+        Hotel.update(obj, {where: {id}})
             .then((data) => {
-                res.redirect('home')
+                res.redirect('/?id=2')
             })
             .catch((err) => {
                 console.log(err)
@@ -94,8 +98,9 @@ class Controller {
     }
 
     static displayQR (req, res) {
+        let id = req.params.id
         QRCode.toDataURL('/success', function (err, url) {
-            res.render('qr', {qr: url});
+            res.render(`qr`, {qr: url, id});
         })
     }
 
@@ -134,36 +139,35 @@ class Controller {
             })
     }
 
-    static myPage (req, res) {
-        let id = req.params.id
-        id = Number(id)
-        let isCustomer = true;
-        User.findByPk(id, {
-            include: {model: Hotel}
-        })
-            .then(data => {
-                if(data.type === 'customer'){
-                    isCustomer = true
-                } else {
-                    isCustomer = false
-                }
-                res.render('my-page', {data, isCustomer})                 
-            })
-            .catch(err => {
-                res.send(err)
-            }) 
-    }
-
     static booking(req, res) {
         let id = req.params.id
         let { checkin, checkout, HotelId } = req.body
         let obj = {UserId: Number(id), HotelId: Number(HotelId), checkin_date: checkin, checkout_date: checkout}
         Booking.create(obj)
+            .then(datas => {
+                return Hotel.findByPk(HotelId)
+            })
             .then(data => {
-                res.redirect(`/myPage/${id}`)
+                let {roomsavailable} = data
+                roomsavailable -= 1
+                let obj = {roomsavailable}
+                return Hotel.update(obj,{where:{id: HotelId}, field:{roomsavailable}})
+            })
+            .then(data => {
+                res.redirect(`/qr/${id}`)
             })
             .catch(err => {
                 console.log(err)
+                res.send(err)
+            })
+    }
+
+    static showHotel(req, res) {
+        Hotel.findAll()
+            .then(datas => {
+                res.render('edit-home', {datas})
+            })
+            .catch(err => {
                 res.send(err)
             })
     }

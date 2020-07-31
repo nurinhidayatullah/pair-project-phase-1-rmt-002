@@ -3,10 +3,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code</title>
+    <%- include('./partials/bootstrap') %> 
 </head>
 <body>
-    <h1>Scan QR code di bawah untuk menyelesaikan booking-an</h1>
-    <img src="<%= qr %>"><br>
-    <a href="">Kembali ke menu utama setelah Anda mengkonfirmasi</a>
+    <div class="container text-center" style="margin-top: 40px;">
+        <h1 ">Scan QR code di bawah untuk menyelesaikan booking-an</h1><br>
+        <img src="<%= qr %>"><br><br><br>
+        <a href="/?id=<%=id%>">Kembali ke menu utama setelah Anda mengkonfirmasi</a>
+    </div>
 </body>
 </html>

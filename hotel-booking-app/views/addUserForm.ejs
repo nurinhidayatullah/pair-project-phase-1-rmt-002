@@ -9,23 +9,23 @@
     <div class="container media-body shadow p-3 mb-5 bg-white rounded mt-5 w-25">
         <form action="/register" method="POST">
                 <label for="validationServer01">Full Name</label>
-                <input type="text" class="form-control" id="validationServer01"><br>
+                <input type="text" name="name" class="form-control" id="validationServer01"><br>
                 <!-- <div class="valid-feedback">
                   Looks good!
                 </div> -->
                 <label for="validationServer02">Username</label>
-                <input type="text" class="form-control" id="validationServer02"><br>
+                <input type="text" name="username" class="form-control" id="validationServer02"><br>
                 <!-- <div class="valid-feedback">
                   Looks good!
                 </div> -->
                 <label for="validationServer03">Password</label>
-                <input type="text" class="form-control" id="validationServer03"><br>
+                <input type="password" name="password" class="form-control" id="validationServer03"><br>
                 <!-- <div class="invalid-feedback">
                   Looks good!
                 </div> -->
             <div class="text-center">
-                <button class="btn btn-primary" type="submit">As Customer</button>
-                <button class="btn btn-primary" type="submit">As Hotel's Admin</button>
+                <button class="btn btn-primary" name="type" value="customer" type="submit">As Customer</button>
+                <button class="btn btn-primary" name="type" value="Hotel" type="submit">As Hotel's Admin</button>
             </div>
         </form>
     </div>

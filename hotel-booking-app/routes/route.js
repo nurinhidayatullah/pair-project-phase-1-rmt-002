@@ -4,12 +4,16 @@ const Controller = require('../controller/controller.js').Controller
 
 route.get('/', Controller.home)
 route.get('/register', Controller.addUserForm)
+route.post('/register', Controller.addUser)
 route.post('/', Controller.login)
-route.get('/myPage/:id', Controller.myPage)
 route.post('/logout/:id', Controller.logout)
-route.get('/:id/addHotel', Controller.addHotelForm)
+route.get('/hotels/add', Controller.addHotelForm)
+route.post('/hotels/add', Controller.addHotel)
+route.get('/hotels', Controller.showHotel)
+route.get('/hotels/edit/:id', Controller.editHotelForm)
+route.post('/hotels/edit/:id', Controller.editHotel)
 route.post('/booking/:id', Controller.booking)
-route.get('/qr', Controller.displayQR)
+route.get('/qr/:id', Controller.displayQR)
 route.get('/success', Controller.displayConfirmation)
 
 module.exports = route;

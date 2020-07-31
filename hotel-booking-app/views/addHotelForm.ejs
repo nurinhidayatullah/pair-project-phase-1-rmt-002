@@ -6,7 +6,7 @@
 </head>
 <body>
     <div class="container media-body shadow p-3 mb-5 bg-white rounded mt-5 w-25">
-        <form action="/<%=id%>/addHotel" method="POST">
+        <form action="/hotels/add" method="POST">
                 <label for="validationServer01">Hotel's Name</label>
                 <input type="text" name="name" class="form-control" id="validationServer01"><br>
                 <!-- <div class="valid-feedback">
@@ -24,14 +24,10 @@
                 </div> -->
                 <label for="validationServer03">Price (/Nigth)</label>
                 <input type="text" name="price" class="form-control" id="validationServer03"><br>
-                <form action="" method="POST">
-                    <div class="form-group">
-                      <label for="exampleFormControlFile1">Hotel's Image</label>
-                      <input type="file" name="IId" value='id' class="form-control-file" id="exampleFormControlFile1">
-                    </div>
-                </form>
+                <label for="validationServer03">Image Id</label>
+                <input type="text" name="ImageId" class="form-control" id="validationServer03"><br>
                 <button class="btn btn-primary" type="submit">Submit</button>
-                <a class="btn btn-primary" href="/myPage/<%=id%>" type="button">Cancel</a>
+                <a class="btn btn-primary" href="/" type="button">Cancel</a>
         </form>
     </div>
 </body>

@@ -7,7 +7,6 @@
 <body>
     <div class="container w-100">
       <% if(isCustomer) { %> 
-        <h3>Welcome <%=data.name%></h3>
             <table class="table">
                 <thead class="thead-light">
                   <tr>
@@ -21,20 +20,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <% for(let hotel of data.Hotels) { %> 
+                    <% for(let hotel of datas) { %> 
                         <tr>
-                          <td><%=hotel.name%></td>
-                          <td><%=hotel.Booking.checkin_date.toJSON().slice(0,10)%></td>
-                          <td><%=hotel.Booking.checkout_date.toJSON().slice(0,10)%></td>
-                          <td><%=hotel.price * hotel.Booking.duration%></td>
-                          <td><%=hotel.Booking.duration%> Day/s</td>
+                          <td><%=hotel.HotelId%></td>
+                          <td><%=hotel.checkin_date.toJSON().slice(0,10)%></td>
+                          <td><%=hotel.checkout_date.toJSON().slice(0,10)%></td>
+                          <td>Belum</td>
+                          <td>Belum</td>
                           <td><button type="button" disabled>Belum Bayar</button></td>
-                          <td><a type="button" class="btn btn-primary" href="/user/<%=data.id%>/payment">Make Payment</a></td>
+                          <td><a type="button" class="btn btn-primary" href="/user/<%=hotel.UserId%>/payment">Make Payment</a></td>
                         </tr>
                     <% } %>
                 </tbody>
         <% } else { %>
-          <h3>Welcome <%=data.name%></h3>
             <a type="button" class="btn btn-primary" href="/<%=data.id%>/addHotel">Add Hotels</a>
             <table class="table">
                 <thead class="thead-light">
@@ -48,13 +46,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <% for(let user of data.Hotels) { %> 
+                    <% for(let user of datas) { %> 
                         <tr>
-                          <td><%=user.name%></td>
-                          <td><%=user.Booking.checkin_date%></td>
-                          <td><%=user.Booking.checkout_date%></td>
-                          <td><%=hotel.price * user.Booking.duration%></td>
-                          <td><%=user.Booking.duration%> Day/s</td>
+                          <td><%=user.id%></td>
+                          <td><%=user.checkin_date%></td>
+                          <td><%=user.checkout_date%></td>
+                          <td>Belum</td>
+                          <td>Belum</td>
                           <td><button type="button" disabled><%=user.Booking.status%></button></td>
                           <td><a type="button" class="btn btn-primary" href="/booking/validate/<%=user.Booking.id%>">Validate Payment</a></td>
                         </tr>

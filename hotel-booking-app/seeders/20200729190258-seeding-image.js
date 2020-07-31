@@ -16,6 +16,26 @@ module.exports = {
         source: 'mariot.jpeg',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        source: '111.jpeg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        source: '1.jpeg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        source: 'download1.jpeg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        source: 'h.jpeg',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {})
   },
